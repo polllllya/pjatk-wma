@@ -33,7 +33,7 @@ def process_movie(cap):
     frame_height = int(cap.get(4))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
 
-    out = cv2.VideoWriter('output.mp4', cv2.VideoWriter_fourcc(*'avc1'), fps, (frame_width, frame_height))
+    out = cv2.VideoWriter('project-1/output.mp4', cv2.VideoWriter_fourcc(*'avc1'), fps, (frame_width, frame_height))
 
     kernel = np.ones((5, 5), np.uint8)
 
