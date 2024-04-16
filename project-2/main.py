@@ -92,7 +92,7 @@ def detect_coins(image_path):
 
 
 def main():
-    image_path = 'images/tray6.jpg'
+    image_path = 'images/tray1.jpg'
     detect_coins(image_path)
 
 
