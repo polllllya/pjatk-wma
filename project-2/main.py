@@ -8,7 +8,6 @@ def detect_coins(image_path):
     img_blur = cv2.medianBlur(img, 3)
     img_gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(img_gray, 500, 650, apertureSize=5)
-
     lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 90, minLineLength=50, maxLineGap=5)
 
     x_coords = [line[0][0] for line in lines]
@@ -31,6 +30,8 @@ def detect_coins(image_path):
     total_area_all_coins = 0
     total_area_5zl_coins = 0
 
+    print('\n-------------------------------ZADANIE 1-------------------------------')
+
     for circle in circles[0]:
         x, y, r = circle[0], circle[1], circle[2]
 
@@ -42,51 +43,48 @@ def detect_coins(image_path):
                 total_area_5zl_coins += coin_area
                 count_inside['big'] += 1
                 color = (0, 255, 255)
-                print('Zad. 1: Moneta 5 zł, x:', x, 'y:', y)
+                print('Moneta 5 zł, x:', x, 'y:', y)
             else:
                 count_inside['small'] += 1
                 color = (0, 255, 0)
-                print('Zad. 1: Moneta 5 gr, x:', x, 'y:', y)
+                print('Moneta 5 gr, x:', x, 'y:', y)
             cv2.circle(img, (x, y), 2, (255, 255, 255), 4)
         else:
             if r > 32:
                 total_area_5zl_coins += coin_area
                 count_outside['big'] += 1
                 color = (0, 255, 255)
-                print('Zad. 1: Moneta 5 zł (poza tacą), x:', x, 'y:', y)
+                print('Moneta 5 zł (poza tacą), x:', x, 'y:', y)
             else:
                 count_outside['small'] += 1
                 color = (0, 255, 0)
-                print('Zad. 1: Moneta 5 gr (poza tacą), x:', x, 'y:', y)
+                print('Moneta 5 gr (poza tacą), x:', x, 'y:', y)
         cv2.circle(img, (x, y), r, color, 2)
 
-    print('---------------------------------------------------------------------------------------------')
     total_inside = count_inside['big'] * 5 + count_inside['small'] * 0.05
     total_outside = count_outside['big'] * 5 + count_outside['small'] * 0.05
     total = round(total_inside + total_outside, 2)
 
-    # Oblicz wartość całkowitej powierzchni monet na tacy
     total_area_all_coins = round(total_area_all_coins, 2)
     total_area_5zl_coins = round(total_area_5zl_coins, 2)
 
-    # Oblicz stosunek powierzchni monet 5 zł do powierzchni tacy
     ratio_5zl_to_tray = tray_area / total_area_5zl_coins
 
-    print('Zad. 2: Całkowita powierzchnia monet:', total_area_all_coins, 'pikseli kwadratowych')
-    print('Zad. 2: Liczba monet 5 zł:', count_inside['big'] + count_outside['big'], 'i monety 5 gr:',
-          count_outside['small'] + count_outside['small'])
-    print('---------------------------------------------------------------------------------------------')
+    print('\n-------------------------------ZADANIE 2-------------------------------')
+    print('Całkowita powierzchnia monet:', total_area_all_coins, 'pikseli kwadratowych')
+    print('Liczba monet 5 zł:', count_inside['big'] + count_outside['big'], 'i monety 5 gr:',
+          count_inside['small'] + count_outside['small'])
 
-    print('Zad. 3: Krawędzie tacy: min_x =', min_x, 'max_x =', max_x, 'min_y =', min_y, 'max_y =', max_y)
-    print('Zad. 3: Powierzchnia tacy:', tray_area, 'pikseli kwadratowych')
-    print('Zad. 3: Całkowita powierzchnia monet 5 zł:', total_area_5zl_coins, 'pikseli kwadratowych')
-    print('Zad. 3: Stosunek powierzchni tacy do powierzchni monet 5 zł:', ratio_5zl_to_tray)
-    print('---------------------------------------------------------------------------------------------')
+    print('\n-------------------------------ZADANIE 3-------------------------------')
+    print('Krawędzie tacy: min_x =', min_x, 'max_x =', max_x, 'min_y =', min_y, 'max_y =', max_y)
+    print('Powierzchnia tacy:', tray_area, 'pikseli kwadratowych')
+    print('Całkowita powierzchnia monet 5 zł:', total_area_5zl_coins, 'pikseli kwadratowych')
+    print('Stosunek powierzchni tacy do powierzchni monet 5 zł:', ratio_5zl_to_tray)
 
-    print('Zad. 4: Kwota na tacy:', total_inside, 'zl')
-    print('Zad. 4: Kwota poza tacą:', total_outside, 'zl')
-    print('Zad. 4: Całkowita kwota:', total, 'zl')
-    print('---------------------------------------------------------------------------------------------')
+    print('\n-------------------------------ZADANIE 4-------------------------------')
+    print('Kwota na tacy:', total_inside, 'zl')
+    print('Kwota poza tacą:', total_outside, 'zl')
+    print('Całkowita kwota:', total, 'zl')
 
     cv2.imshow('detected coins', img)
     cv2.waitKey(0)
@@ -94,7 +92,7 @@ def detect_coins(image_path):
 
 
 def main():
-    image_path = 'images/tray4.jpg'
+    image_path = 'images/tray6.jpg'
     detect_coins(image_path)
 
 
