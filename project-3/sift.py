@@ -1,7 +1,8 @@
 import cv2
 
 reference_images = []
-for image_path in ["images/1.jpeg", "images/2.jpeg", "images/3.jpeg", "images/4.jpeg", "images/5.jpeg", "images/6.jpeg"]:
+for image_path in ["images/1.jpeg", "images/2.jpeg", "images/3.jpeg", "images/4.jpeg", "images/5.jpeg",
+                   "images/6.jpeg"]:
     reference_image = cv2.imread(image_path)
     gray_reference = cv2.cvtColor(reference_image, cv2.COLOR_BGR2GRAY)
     sift = cv2.SIFT_create()
@@ -16,7 +17,6 @@ while True:
         break
 
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
     keypoints_frame, descriptors_frame = sift.detectAndCompute(gray_frame, None)
 
     best_match_count = 0
@@ -35,7 +35,6 @@ while True:
             best_match_count = len(good_matches)
             best_matched_image = reference_image
             best_matched_keypoints = keypoints_reference
-
 
     if best_matched_image is not None and good_matches:
         img3 = cv2.drawMatches(best_matched_image, best_matched_keypoints, frame, keypoints_frame, good_matches, None,
